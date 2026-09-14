@@ -2,13 +2,16 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
 
-const baseVariants = (reduced: boolean): Variants => ({
-  hidden: { opacity: 0, y: reduced ? 0 : 24, filter: reduced ? "none" : "blur(10px)" },
+const baseVariants = (reduced: boolean, delay: number): Variants => ({
+  hidden: { opacity: 0, y: reduced ? 0 : 24 },
   show: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: reduced ? 0.001 : 0.9, ease: [0.16, 1, 0.3, 1] },
+    transition: {
+      delay: reduced ? 0 : delay,
+      duration: reduced ? 0.001 : 0.7,
+      ease: [0.16, 1, 0.3, 1],
+    },
   },
 });
 
@@ -27,11 +30,10 @@ export function SectionReveal({
   const Comp = motion[As] as typeof motion.div;
   return (
     <Comp
-      variants={baseVariants(reduced)}
+      variants={baseVariants(reduced, delay)}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ delay }}
+      viewport={{ once: true, margin: "60px" }}
       className={className}
     >
       {children}

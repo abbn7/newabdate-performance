@@ -133,8 +133,12 @@ function ProjectDetail() {
               <img
                 src={p.cover}
                 alt={`${p.title} — hero`}
+                width={893}
+                height={768}
+                sizes="(min-width: 1280px) 1152px, calc(100vw - 2rem)"
                 className="h-auto w-full"
                 loading="eager"
+                fetchPriority="high"
                 decoding="async"
               />
             </GlassCard>
@@ -280,7 +284,11 @@ function ProjectDetail() {
                     <img
                       src={g.src}
                       alt={g.caption}
+                      width={893}
+                      height={768}
+                      sizes="(min-width: 768px) 50vw, calc(100vw - 2rem)"
                       loading="lazy"
+                      fetchPriority="low"
                       decoding="async"
                       className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                     />

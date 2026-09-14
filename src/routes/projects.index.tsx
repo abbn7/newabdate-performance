@@ -55,7 +55,11 @@ function ProjectsIndex() {
                         <img
                           src={p.cover}
                           alt={p.title}
+                          width={893}
+                          height={768}
+                          sizes="(min-width: 1024px) 50vw, calc(100vw - 2rem)"
                           loading="lazy"
+                          fetchPriority="low"
                           decoding="async"
                           className="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                         />

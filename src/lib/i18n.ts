@@ -1,12 +1,20 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 import en from "@/locales/en.json";
 import ar from "@/locales/ar.json";
 
+function detectLanguage() {
+  if (typeof window === "undefined") return "en";
+  try {
+    return localStorage.getItem("an_lang") || (navigator.language.startsWith("ar") ? "ar" : "en");
+  } catch {
+    return navigator.language.startsWith("ar") ? "ar" : "en";
+  }
+}
+
 if (!i18n.isInitialized) {
+  const detectedLanguage = detectLanguage();
   i18n
-    .use(LanguageDetector)
     .use(initReactI18next)
     .init({
       resources: {
@@ -15,12 +23,8 @@ if (!i18n.isInitialized) {
       },
       fallbackLng: "en",
       supportedLngs: ["en", "ar"],
+      lng: detectedLanguage,
       interpolation: { escapeValue: false },
-      detection: {
-        order: ["localStorage", "navigator"],
-        caches: ["localStorage"],
-        lookupLocalStorage: "an_lang",
-      },
       react: { useSuspense: false },
     });
 }

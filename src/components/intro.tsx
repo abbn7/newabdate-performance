@@ -13,7 +13,7 @@ export function IntroExperience() {
       sessionStorage.setItem("an_intro_seen", "1");
     } catch {}
     setShow(true);
-    const t = window.setTimeout(() => setShow(false), 2000);
+    const t = window.setTimeout(() => setShow(false), 1050);
     return () => window.clearTimeout(t);
   }, [reduced]);
 
@@ -23,8 +23,8 @@ export function IntroExperience() {
         <motion.div
           key="intro"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, filter: "blur(10px)", scale: 1.04 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          exit={{ opacity: 0, scale: 1.02 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-0 z-[100] grid place-items-center bg-black"
         >
           <button
@@ -46,7 +46,7 @@ export function IntroExperience() {
               style={{
                 background:
                   "radial-gradient(circle at 50% 50%, rgba(125,108,255,0.5), rgba(95,200,232,0.3) 40%, transparent 70%)",
-                filter: "blur(40px)",
+                
               }}
             />
             <svg

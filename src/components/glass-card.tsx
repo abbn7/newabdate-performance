@@ -21,7 +21,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(function Gla
     <div
       ref={ref}
       className={cn(
-        "relative overflow-hidden rounded-2xl",
+        "glass-card relative overflow-hidden rounded-2xl",
         v,
         noise && "noise",
         className,

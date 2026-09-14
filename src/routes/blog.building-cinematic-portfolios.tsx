@@ -93,7 +93,7 @@ function ArticlePage() {
             <div className="mt-6">
               <Kicker>Guide · Frontend</Kicker>
             </div>
-            <h1 className="mt-4 font-display text-[clamp(2.2rem,6vw,4rem)] leading-[1.02] tracking-[-0.02em]">
+            <h1 className="mt-4 font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.02] tracking-[-0.02em]">
               {TITLE}
             </h1>
             <p className="mt-5 text-lg text-muted-foreground">

@@ -194,8 +194,12 @@ function HomePage() {
                   <img
                     src={featured.cover}
                     alt={featured.title}
+                    width={893}
+                    height={768}
+                    sizes="(min-width: 1024px) 50vw, calc(100vw - 2rem)"
                     className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                     loading="lazy"
+                    fetchPriority="low"
                     decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent" />
@@ -234,7 +238,7 @@ function HomePage() {
               <div className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
                 {t("contact.kicker")}
               </div>
-              <h2 className="mt-4 font-display text-[clamp(2rem,5vw,3.4rem)] leading-tight tracking-tight">
+              <h2 className="mt-4 font-display text-[clamp(1.85rem,4.3vw,3rem)] leading-tight tracking-tight">
                 Let's build something{" "}
                 <span className="text-gradient animate-gradient">the web remembers</span>.
               </h2>

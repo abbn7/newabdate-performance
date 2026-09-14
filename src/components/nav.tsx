@@ -23,8 +23,14 @@ export function Nav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
+    let last = window.scrollY > 12;
+    setScrolled(last);
+    const onScroll = () => {
+      const next = window.scrollY > 12;
+      if (next === last) return;
+      last = next;
+      setScrolled(next);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -34,10 +40,10 @@ export function Nav() {
   }, [pathname]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:pt-4 safe-left safe-right">
+    <header className="ui-enter fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:pt-4 safe-left safe-right">
       <nav
         className={cn(
-          "flex w-full max-w-5xl items-center justify-between gap-3 rounded-full px-3 py-2 transition-all duration-500",
+          "flex w-full max-w-5xl items-center justify-between gap-3 rounded-full px-3 py-2 transition-colors duration-300",
           scrolled ? "glass-strong" : "glass",
         )}
       >

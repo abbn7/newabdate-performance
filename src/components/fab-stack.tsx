@@ -4,7 +4,7 @@ import { DevModeButton } from "./dev-mode";
 
 export function FabStack() {
   return (
-    <div className="pointer-events-none fixed bottom-5 right-4 z-40 flex flex-col items-end gap-3 safe-bottom">
+    <div className="fab-stack ui-enter-late pointer-events-none fixed z-40 flex flex-col items-center gap-2">
       <WhatsAppFab />
       <DevModeButton />
     </div>

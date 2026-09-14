@@ -10,6 +10,11 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import displayFont from "@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url";
+import bodyFont from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
+import arabicFont from "@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-400-normal.woff2?url";
+import { MotionLifecycle } from "@/components/motion-lifecycle";
+import { MotionConfig } from "framer-motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import "../lib/i18n";
 import { Nav } from "@/components/nav";
@@ -17,13 +22,7 @@ import { Footer } from "@/components/footer";
 import { IntroExperience } from "@/components/intro";
 import { FabStack } from "@/components/fab-stack";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { lazy, Suspense as ReactSuspense } from "react";
-const Analytics = lazy(() =>
-  import("@vercel/analytics/react").then((m) => ({ default: m.Analytics })),
-);
-const SpeedInsights = lazy(() =>
-  import("@vercel/speed-insights/react").then((m) => ({ default: m.SpeedInsights })),
-);
+import { IdleVitals } from "@/components/idle-vitals";
 import { useTranslation } from "react-i18next";
 import { applyDirection } from "@/lib/i18n";
 
@@ -124,6 +123,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      ...[displayFont, bodyFont, arabicFont].map((href) => ({
+        rel: "preload", as: "font", type: "font/woff2", crossOrigin: "anonymous", href,
+      })),
       { rel: "preconnect", href: "https://vitals.vercel-insights.com", crossOrigin: "" },
       { rel: "dns-prefetch", href: "https://vitals.vercel-insights.com" },
       {
@@ -184,6 +186,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <MotionConfig reducedMotion="user">
+      <MotionLifecycle />
       <LangSync />
       <SmoothScroll />
       <IntroExperience />
@@ -193,10 +197,8 @@ function RootComponent() {
       </main>
       <Footer />
       <FabStack />
-      <ReactSuspense fallback={null}>
-        <Analytics />
-        <SpeedInsights />
-      </ReactSuspense>
+      <IdleVitals />
+      </MotionConfig>
     </QueryClientProvider>
   );
 }

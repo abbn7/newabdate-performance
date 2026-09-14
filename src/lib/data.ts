@@ -6,13 +6,23 @@ import giitHero from "@/assets/giit-hero.jpeg?format=webp&quality=78&w=1600";
 import giitFeatures from "@/assets/giit-features.webp";
 import giitCommands from "@/assets/giit-commands.webp";
 // @ts-expect-error vite-imagetools query
-import portfolioHome from "@/assets/portfolio-home.jpg?format=webp&quality=78&w=1600";
+import portfolioHero from "@/assets/portfolio-hero-new.jpeg?format=webp&quality=78&w=1600";
 // @ts-expect-error vite-imagetools query
-import portfolioAbout from "@/assets/portfolio-about.jpg?format=webp&quality=78&w=1600";
+import portfolioProjects from "@/assets/portfolio-projects-new.png?format=webp&quality=78&w=1600";
 // @ts-expect-error vite-imagetools query
-import portfolioCase from "@/assets/portfolio-case.jpg?format=webp&quality=78&w=1600";
+import portfolioAbout from "@/assets/portfolio-about-new.png?format=webp&quality=78&w=1600";
 // @ts-expect-error vite-imagetools query
-import portfolioContact from "@/assets/portfolio-contact.jpg?format=webp&quality=78&w=1600";
+import portfolioContact from "@/assets/portfolio-contact-new.png?format=webp&quality=78&w=1600";
+// @ts-expect-error vite-imagetools query
+import vanishMailLightHome from "@/assets/vanish-mail-home-light.png?format=webp&quality=78&w=1600";
+// @ts-expect-error vite-imagetools query
+import vanishMailLightInbox from "@/assets/vanish-mail-inbox-light.png?format=webp&quality=78&w=1600";
+// @ts-expect-error vite-imagetools query
+import vanishMailDarkInbox from "@/assets/vanish-mail-inbox-dark.png?format=webp&quality=78&w=1600";
+// @ts-expect-error vite-imagetools query
+import vanishMailDarkHome from "@/assets/vanish-mail-home-dark.png?format=webp&quality=78&w=1600";
+// @ts-expect-error vite-imagetools query
+import vanishMailComparison from "@/assets/vanish-mail-comparison.png?format=webp&quality=78&w=1600";
 
 export type Project = {
   slug: string;
@@ -61,6 +71,66 @@ export const profile = {
     "Versatile Full-Stack Developer with a strong specialization in modern Frontend development. Experienced in building production-grade web applications using React, Next.js, TypeScript, and Supabase. Proficient in GitHub workflows, CI/CD practices, and the strategic integration of AI tools to accelerate development cycles and deliver higher-quality software. Currently pursuing dual academic tracks in Computer Science and Artificial Intelligence, bridging theoretical depth with practical, client-facing project delivery.",
   summaryAr:
     "مطور Full-Stack متعدد الاهتمامات بتخصص قوي في تطوير الواجهات الأمامية الحديثة. خبرة في بناء تطبيقات ويب جاهزة للإنتاج باستخدام React و Next.js و TypeScript و Supabase. متمكن من سير عمل GitHub و CI/CD، والدمج الاستراتيجي لأدوات الذكاء الاصطناعي لتسريع دورات التطوير وتقديم برمجيات أعلى جودة. أدرس حالياً مسارين أكاديميين في علوم الحاسب والذكاء الاصطناعي، ما يربط العمق النظري بالتسليم العملي للمشاريع.",
+};
+
+const vanishMailProject: Project = {
+    slug: "vanish-mail",
+    title: "Vanish Mail — Premium Disposable Inbox",
+    titleAr: "Vanish Mail — بريد مؤقت حقيقي",
+    tagline:
+      "A bilingual temporary inbox using the live mail.tm API, designed around privacy, clarity, and a truthful mailbox lifecycle.",
+    taglineAr:
+      "صندوق بريد مؤقت عربي وإنجليزي يعمل فعلياً عبر mail.tm API، مصمم للخصوصية والوضوح ودورة حياة صادقة للحساب.",
+    year: "2026",
+    role: "Designer + Full-Stack Developer",
+    roleAr: "مصمم + مطور Full-Stack",
+    live: "https://temporary-zeta-one.vercel.app/",
+    cover: vanishMailDarkHome,
+    gallery: [
+      { src: vanishMailLightHome, caption: "Light mode — the real temporary address workspace." },
+      { src: vanishMailDarkHome, caption: "Dark mode — the live inbox and address controls." },
+      { src: vanishMailLightInbox, caption: "Light mode — empty inbox state and how-it-works section." },
+      { src: vanishMailDarkInbox, caption: "Dark mode — inbox reading experience and product explanation." },
+      { src: vanishMailComparison, caption: "Feature comparison — transparent product decisions in the interface." },
+    ],
+    stack: {
+      Frontend: ["TanStack Start v1", "React 19", "Vite", "TypeScript strict", "Tailwind CSS v4"],
+      State: ["Zustand", "TanStack Query", "Framer Motion"],
+      Security: ["DOMPurify", "RFC7807 error mapping", "External-image protection"],
+      Platform: ["mail.tm API", "Server Functions", "Vercel"],
+    },
+    overview:
+      "A real disposable mailbox, not a static demo. All mail.tm requests pass through server functions so the browser never talks to the provider directly. That single proxy layer resolves CORS, limits account creation to eight accounts per IP every ten minutes, and translates raw RFC7807 failures into clear localized messages. The experience manages up to five labelled inboxes at once, while keeping the product honest about what the upstream service actually retains.",
+    overviewAr:
+      "تطبيق بريد مؤقت حقيقي وليس واجهة تجريبية. كل اتصال بـ mail.tm يمر عبر Server Functions، لذلك لا يتعامل المتصفح مباشرة مع المزود. طبقة الـProxy تحل CORS، وتطبق حدّاً من ثمانية حسابات لكل IP كل عشر دقائق، وتحوّل أخطاء RFC7807 الخام إلى رسائل واضحة مترجمة. يدير المستخدم حتى خمسة صناديق بريد بأسماء مميزة، مع عرض صادق لما يحتفظ به المزود فعلياً.",
+    features: [
+      { t: "Five live inboxes", d: "Manage up to five labelled mailboxes at once, each with its own unread badge." },
+      { t: "OTP extraction", d: "Detect verification codes from Arabic and English message content and copy them in one action." },
+      { t: "Keyboard-first inbox", d: "Use j/k, Enter, Escape, r and c with an in-product shortcut sheet." },
+      { t: "Safe message reader", d: "Read sanitized HTML, plain text, or raw source while external images remain blocked by default." },
+      { t: "Privacy utilities", d: "QR address sharing, browser-generated notification sound, and optional web notifications." },
+      { t: "Sage Villa system", d: "Three Sage, Clay, and Slate palettes, each designed in light and dark modes." },
+      { t: "Truthful lifecycle", d: "Shows time active instead of a fake expiry countdown, with a real destroy-and-regenerate action." },
+      { t: "Search-ready", d: "Localized metadata, hreflang, and WebApplication, FAQPage, and HowTo structured data." },
+    ],
+    architecture: [
+      { t: "Server proxy", d: "All provider calls run through TanStack Start server functions rather than the browser." },
+      { t: "Rate-limit boundary", d: "Account creation is capped at eight accounts for each IP in a ten-minute window." },
+      { t: "Error translation", d: "Provider RFC7807 responses become useful Arabic and English product messages." },
+      { t: "Mailbox state", d: "Zustand coordinates the local multi-inbox workspace while TanStack Query owns remote data freshness." },
+      { t: "Message safety", d: "DOMPurify sanitizes rendered HTML and external images are opt-in to reduce tracking risk." },
+    ],
+    security: [
+      "The mail provider is accessed only through server functions, protecting the browser from direct upstream coupling and CORS failures.",
+      "Rendered HTML is sanitized with DOMPurify before display, and remote images remain blocked unless the reader explicitly enables them.",
+      "The destroy-and-regenerate control deletes the account through the actual provider API instead of simulating a reset in the interface.",
+    ],
+    commands: [
+      { c: "j / k", k: "Navigate", d: "Move through messages without leaving the keyboard." },
+      { c: "Enter / Esc", k: "Read", d: "Open a message or return to the inbox." },
+      { c: "r", k: "Refresh", d: "Refresh the current inbox." },
+      { c: "c", k: "Copy", d: "Copy the selected verification code quickly." },
+    ],
 };
 
 export const highlights = [
@@ -218,6 +288,7 @@ export const projects: Project[] = [
       { c: "/cancel", k: "Basic", d: "Cancel the current operation." },
     ],
   },
+  vanishMailProject,
   {
     slug: "portfolio",
     title: "This Portfolio — Cinematic Frontend",
@@ -229,13 +300,13 @@ export const projects: Project[] = [
     year: "2026",
     role: "Designer + Engineer + Author",
     roleAr: "مصمم + مهندس + كاتب",
-    live: "/",
-    cover: portfolioHome,
+    live: "https://newabdate.vercel.app/",
+    cover: portfolioHero,
     gallery: [
-      { src: portfolioHome, caption: "Home — cinematic hero with a live WebGL glass torus." },
-      { src: portfolioAbout, caption: "About — bilingual bio, education timeline, technical skills." },
-      { src: portfolioCase, caption: "Case study — dynamic project routing with full architecture breakdown." },
-      { src: portfolioContact, caption: "Contact — validated form, direct lines, footer sitemap." },
+      { src: portfolioHero, caption: "Home — cinematic hero with a live WebGL glass torus." },
+      { src: portfolioProjects, caption: "Projects — published case studies and visual portfolio index." },
+      { src: portfolioAbout, caption: "About — bilingual bio, education timeline, and technical skills." },
+      { src: portfolioContact, caption: "Contact — validated form, direct lines, and footer sitemap." },
     ],
     stack: {
       Frontend: [

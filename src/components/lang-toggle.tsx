@@ -6,6 +6,9 @@ export function LangToggle() {
   const { i18n } = useTranslation();
   const next = i18n.language?.startsWith("ar") ? "en" : "ar";
   function swap() {
+    try {
+      localStorage.setItem("an_lang", next);
+    } catch {}
     i18n.changeLanguage(next);
     applyDirection(next);
   }

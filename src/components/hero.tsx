@@ -1,5 +1,5 @@
 "use client";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState, Component, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -10,10 +10,25 @@ import { profile } from "@/lib/data";
 
 const HeroCanvas = lazy(() => import("./hero-canvas"));
 
+class CanvasBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  render() {
+    return this.state.failed ? <div className="hero-canvas-fallback" /> : this.props.children;
+  }
+}
+
 export function Hero() {
   const { t, i18n } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if (!inView || ready) return;
+    // Let the critical content, fonts and intro paint before loading WebGL.
+    const timer = window.setTimeout(() => setReady(true), 1000);
+    return () => window.clearTimeout(timer);
+  }, [inView, ready]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -35,23 +50,25 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex min-h-[100svh] items-center overflow-hidden pt-28"
+      className="hero-section relative isolate flex min-h-[100svh] items-center overflow-hidden pt-28 pb-24"
     >
       {/* Aurora background */}
       <div aria-hidden className="aurora animate-gradient" />
-      {/* 3D layer — only mounted while hero is visible to keep the GPU idle on scroll */}
+      {/* Keep the scene allocated across scroll; pause its renderer outside the hero. */}
       <div className="pointer-events-none absolute inset-0 z-[1] opacity-90 [mask-image:radial-gradient(60%_60%_at_70%_40%,#000_40%,transparent_75%)]">
-        {inView && (
-          <Suspense fallback={null}>
-            <HeroCanvas />
-          </Suspense>
+        {ready && (
+          <CanvasBoundary>
+            <Suspense fallback={null}>
+              <HeroCanvas active={inView} />
+            </Suspense>
+          </CanvasBoundary>
         )}
       </div>
 
-      <div className="relative z-[2] mx-auto grid w-full max-w-6xl gap-10 px-4 sm:px-6">
+      <div className="relative z-[2] mx-auto grid w-full max-w-6xl gap-7 px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
           className="inline-flex items-center gap-2 self-start rounded-full glass-subtle px-3 py-1.5 text-[11px] uppercase tracking-[0.2em] text-muted-foreground"
         >
@@ -60,10 +77,10 @@ export function Hero() {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 40, filter: "blur(14px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
-          className="font-display text-[clamp(2.6rem,9vw,7rem)] leading-[0.95] tracking-[-0.03em]"
+          className="font-display hero-title text-[clamp(2.4rem,7.2vw,5.6rem)] leading-[1.04] tracking-[-0.03em]"
         >
           {t("hero.title_pre")} <br />
           <span className="text-gradient animate-gradient">{t("hero.title_grad")}</span>
@@ -97,7 +114,7 @@ export function Hero() {
           </MagneticButton>
           <div className="ms-2 hidden items-center gap-1.5 text-xs text-muted-foreground sm:inline-flex">
             <span className="size-1 rounded-full bg-current/40" />
-            <TextRotator items={roles} />
+            <TextRotator items={roles} active={inView} />
           </div>
         </motion.div>
 
