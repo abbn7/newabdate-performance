@@ -33,7 +33,7 @@ export function SectionReveal({
       variants={baseVariants(reduced, delay)}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "60px" }}
+      viewport={{ once: true, margin: "0px 0px 280px 0px" }}
       className={className}
     >
       {children}

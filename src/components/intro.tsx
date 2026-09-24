@@ -11,7 +11,9 @@ export function IntroExperience() {
     try {
       if (sessionStorage.getItem("an_intro_seen") === "1") return;
       sessionStorage.setItem("an_intro_seen", "1");
-    } catch {}
+    } catch {
+      // Private browsing can disable session storage; the intro still runs.
+    }
     setShow(true);
     const t = window.setTimeout(() => setShow(false), 1050);
     return () => window.clearTimeout(t);
@@ -25,13 +27,13 @@ export function IntroExperience() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.02 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[100] grid place-items-center bg-black"
+          className="intro-screen fixed inset-0 z-[100] grid place-items-center bg-background text-foreground"
         >
           <button
             type="button"
             aria-label="Skip intro"
             onClick={() => setShow(false)}
-            className="absolute right-4 top-4 rounded-full glass-subtle px-3 py-1.5 text-xs text-white/70 hover:text-white"
+            className="absolute right-4 top-4 rounded-full glass-subtle px-3 py-1.5 text-xs text-foreground/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground"
           >
             Skip
           </button>
@@ -42,11 +44,10 @@ export function IntroExperience() {
               initial={{ scale: 0.4, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.7 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute size-72 rounded-full"
+              className="intro-glow absolute size-72 rounded-full"
               style={{
                 background:
                   "radial-gradient(circle at 50% 50%, rgba(125,108,255,0.5), rgba(95,200,232,0.3) 40%, transparent 70%)",
-                
               }}
             />
             <svg
@@ -111,7 +112,7 @@ export function IntroExperience() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.6 }}
-              className="mt-6 font-mono text-[10px] uppercase tracking-[0.4em] text-white/50"
+              className="mt-6 font-mono text-[10px] uppercase tracking-[0.4em] text-foreground/60"
             >
               Abdelhamed Nada
             </motion.div>

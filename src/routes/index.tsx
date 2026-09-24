@@ -51,13 +51,16 @@ function HomePage() {
             <SectionReveal>
               <GlassCard className="p-8 sm:p-10" glow>
                 <p className="text-pretty text-lg leading-relaxed text-foreground/90">
-                  {isAr ? profile.summaryAr : profile.summary}
+                  {isAr ? profile.summaryPreviewAr : profile.summaryPreview}
                 </p>
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   {highlights.map((h) => (
-                    <div key={h.title} className="rounded-2xl glass-subtle p-4">
+                    <div
+                      key={h.title}
+                      className="rounded-2xl glass-subtle p-3.5 transition-transform duration-300 ease-out motion-safe:hover:-translate-y-0.5 motion-reduce:transition-none"
+                    >
                       <div className="font-display text-lg">{isAr ? h.titleAr : h.title}</div>
-                      <p className="mt-1 text-sm text-muted-foreground">
+                      <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
                         {isAr ? h.descAr : h.desc}
                       </p>
                     </div>
@@ -150,14 +153,17 @@ function HomePage() {
                   </p>
 
                   <div className="mt-6 flex flex-wrap gap-2">
-                    {Object.values(featured.stack).flat().slice(0, 6).map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-full glass-subtle px-3 py-1 text-[11px] text-foreground/85 transition-colors hover:bg-[var(--glass-3)] motion-reduce:transition-none"
-                      >
-                        {s}
-                      </span>
-                    ))}
+                    {Object.values(featured.stack)
+                      .flat()
+                      .slice(0, 6)
+                      .map((s) => (
+                        <span
+                          key={s}
+                          className="rounded-full glass-subtle px-3 py-1 text-[11px] text-foreground/85 transition-colors hover:bg-[var(--glass-3)] motion-reduce:transition-none"
+                        >
+                          {s}
+                        </span>
+                      ))}
                   </div>
 
                   <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -219,7 +225,7 @@ function HomePage() {
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((p, i) => (
               <SectionReveal key={p.t} delay={i * 0.06}>
-                <GlassCard className="h-full p-6 transition-colors duration-300 hover:bg-[var(--glass-3)] motion-reduce:transition-none">
+                <GlassCard className="h-full p-6 transition-[background-color,transform] duration-300 ease-out hover:bg-[var(--glass-3)] motion-safe:hover:-translate-y-1 motion-reduce:transition-none">
                   <div className="font-mono text-xs text-muted-foreground">0{i + 1}</div>
                   <div className="mt-3 font-display text-2xl tracking-tight">{p.t}</div>
                   <p className="mt-2 text-sm text-muted-foreground">{p.d}</p>

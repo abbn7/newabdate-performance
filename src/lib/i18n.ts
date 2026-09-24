@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import en from "@/locales/en.json";
 import ar from "@/locales/ar.json";
 
-function detectLanguage() {
+export function detectLanguage() {
   if (typeof window === "undefined") return "en";
   try {
     return localStorage.getItem("an_lang") || (navigator.language.startsWith("ar") ? "ar" : "en");
@@ -13,20 +13,19 @@ function detectLanguage() {
 }
 
 if (!i18n.isInitialized) {
-  const detectedLanguage = detectLanguage();
-  i18n
-    .use(initReactI18next)
-    .init({
-      resources: {
-        en: { translation: en },
-        ar: { translation: ar },
-      },
-      fallbackLng: "en",
-      supportedLngs: ["en", "ar"],
-      lng: detectedLanguage,
-      interpolation: { escapeValue: false },
-      react: { useSuspense: false },
-    });
+  i18n.use(initReactI18next).init({
+    resources: {
+      en: { translation: en },
+      ar: { translation: ar },
+    },
+    fallbackLng: "en",
+    supportedLngs: ["en", "ar"],
+    // Match the server's first render. LangSync applies the browser choice
+    // after hydration so React does not rebuild the entire page.
+    lng: "en",
+    interpolation: { escapeValue: false },
+    react: { useSuspense: false },
+  });
 }
 
 export function applyDirection(lng: string) {

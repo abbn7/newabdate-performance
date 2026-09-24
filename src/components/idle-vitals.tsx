@@ -13,7 +13,7 @@ export function IdleVitals() {
 
   useEffect(() => {
     let cancelled = false;
-    let timeout = 0;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     let idle = 0;
 
     const load = async () => {
@@ -27,12 +27,12 @@ export function IdleVitals() {
     if ("requestIdleCallback" in window) {
       idle = window.requestIdleCallback(() => void load(), { timeout: 4500 });
     } else {
-      timeout = window.setTimeout(() => void load(), 2500);
+      timeout = globalThis.setTimeout(() => void load(), 2500);
     }
 
     return () => {
       cancelled = true;
-      window.clearTimeout(timeout);
+      if (timeout) globalThis.clearTimeout(timeout);
       if (idle) window.cancelIdleCallback(idle);
     };
   }, []);

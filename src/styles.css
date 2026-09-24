@@ -213,6 +213,22 @@
   border: 1px solid var(--glass-border);
 }
 
+/* Static glass fills keep the card palette without a backdrop pass. */
+@utility card-glass {
+  background: var(--glass-2);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 0 var(--glass-highlight), 0 30px 60px -25px rgb(0 0 0 / .55);
+}
+@utility card-glass-strong {
+  background: var(--glass-4);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 0 var(--glass-highlight), 0 40px 80px -30px rgb(0 0 0 / .6);
+}
+@utility card-glass-subtle {
+  background: var(--glass-1);
+  border: 1px solid var(--glass-border);
+}
+
 @utility text-gradient {
   background: linear-gradient(
     100deg,
@@ -272,8 +288,7 @@
 html[data-page-hidden] .animate-gradient,
 html[data-page-hidden] .animate-pulse-soft,
 html[data-page-hidden] .animate-float,
-html[data-page-hidden] .animate-spin-slow,
-[data-motion-paused] {
+html[data-page-hidden] .animate-spin-slow {
   animation-play-state: paused !important;
 }
 
@@ -389,8 +404,7 @@ footer { padding-bottom: max(8rem, calc(env(safe-area-inset-bottom, 0px) + 7rem)
 
 /* Skip layout and paint for offscreen pages/sections while preserving their
    exact styling when they approach the viewport. */
-main > :not(.hero-section),
-main section:not(.hero-section),
+main > :not(.hero-section, #about),
 footer {
   content-visibility: auto;
   contain-intrinsic-block-size: auto 720px;
@@ -405,16 +419,13 @@ html[data-scrolling] .animate-spin-slow {
   animation-play-state: paused !important;
 }
 
-/* Backdrop filters are the largest scrolling paint cost. While pixels are
-   already moving, keep the exact glass fill, border, highlight and shadow and
-   suspend only the live background sampling. It is restored 140ms after the
-   gesture ends. */
-html[data-scrolling] :is(.glass, .glass-strong, .glass-subtle) {
+/* Preserve the Hero's existing treatment during scrolling. */
+html[data-scrolling] .hero-section :is(.glass, .glass-strong, .glass-subtle) {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-html[data-scrolling] .noise::after {
+html[data-scrolling] .hero-section .noise::after {
   opacity: 0;
 }
 
@@ -423,6 +434,10 @@ html[data-scrolling] .noise::after {
 :is(.glass, .glass-strong) :is(.glass, .glass-strong, .glass-subtle) {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+.glass-card :is(.glass, .glass-strong, .glass-subtle) {
+  backdrop-filter: initial !important;
 }
 
 /* Dark hero base is true AMOLED black. The existing animated aurora and WebGL
@@ -439,14 +454,6 @@ main img {
 .hero-section canvas {
   contain: strict;
   animation: canvas-enter 700ms cubic-bezier(.16, 1, .3, 1) both;
-}
-
-/* Large card collections on case-study and project pages are laid out and
-   painted only as they approach the viewport. The browser remembers the real
-   size after first render, so the final composition remains unchanged. */
-.glass-card {
-  content-visibility: auto;
-  contain-intrinsic-block-size: auto 320px;
 }
 
 /* No browser work is needed for hover-only transitions on touch hardware. */

@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import displayFont from "@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url";
 import bodyFont from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
-import arabicFont from "@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-400-normal.woff2?url";
+import arabicFont from "@fontsource/rubik/files/rubik-arabic-400-normal.woff2?url";
 import { MotionLifecycle } from "@/components/motion-lifecycle";
 import { MotionConfig } from "framer-motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -24,7 +24,7 @@ import { FabStack } from "@/components/fab-stack";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { IdleVitals } from "@/components/idle-vitals";
 import { useTranslation } from "react-i18next";
-import { applyDirection } from "@/lib/i18n";
+import { detectLanguage } from "@/lib/i18n";
 
 const themeBootstrap = `
 (function(){try{
@@ -124,7 +124,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "stylesheet", href: appCss },
       ...[displayFont, bodyFont, arabicFont].map((href) => ({
-        rel: "preload", as: "font", type: "font/woff2", crossOrigin: "anonymous", href,
+        rel: "preload",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous" as const,
+        href,
       })),
       { rel: "preconnect", href: "https://vitals.vercel-insights.com", crossOrigin: "" },
       { rel: "dns-prefetch", href: "https://vitals.vercel-insights.com" },
@@ -161,7 +165,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" dir="ltr" className="dark">
+    <html lang="en" dir="ltr" className="dark" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
@@ -176,8 +180,13 @@ function RootShell({ children }: { children: ReactNode }) {
 function LangSync() {
   const { i18n } = useTranslation();
   useEffect(() => {
-    applyDirection(i18n.language || "en");
-  }, [i18n.language]);
+    const preferred = detectLanguage();
+    if (preferred === i18n.language) return;
+    // Route content can hydrate after the shell. Keep the server language until
+    // the initial route has had time to hydrate, then apply the saved choice.
+    const timer = window.setTimeout(() => void i18n.changeLanguage(preferred), 350);
+    return () => window.clearTimeout(timer);
+  }, [i18n]);
   return null;
 }
 
@@ -187,17 +196,17 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <MotionConfig reducedMotion="user">
-      <MotionLifecycle />
-      <LangSync />
-      <SmoothScroll />
-      <IntroExperience />
-      <Nav />
-      <main className="relative">
-        <Outlet />
-      </main>
-      <Footer />
-      <FabStack />
-      <IdleVitals />
+        <MotionLifecycle />
+        <LangSync />
+        <SmoothScroll />
+        <IntroExperience />
+        <Nav />
+        <main className="relative">
+          <Outlet />
+        </main>
+        <Footer />
+        <FabStack />
+        <IdleVitals />
       </MotionConfig>
     </QueryClientProvider>
   );

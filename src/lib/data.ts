@@ -71,6 +71,10 @@ export const profile = {
     "Versatile Full-Stack Developer with a strong specialization in modern Frontend development. Experienced in building production-grade web applications using React, Next.js, TypeScript, and Supabase. Proficient in GitHub workflows, CI/CD practices, and the strategic integration of AI tools to accelerate development cycles and deliver higher-quality software. Currently pursuing dual academic tracks in Computer Science and Artificial Intelligence, bridging theoretical depth with practical, client-facing project delivery.",
   summaryAr:
     "مطور Full-Stack متعدد الاهتمامات بتخصص قوي في تطوير الواجهات الأمامية الحديثة. خبرة في بناء تطبيقات ويب جاهزة للإنتاج باستخدام React و Next.js و TypeScript و Supabase. متمكن من سير عمل GitHub و CI/CD، والدمج الاستراتيجي لأدوات الذكاء الاصطناعي لتسريع دورات التطوير وتقديم برمجيات أعلى جودة. أدرس حالياً مسارين أكاديميين في علوم الحاسب والذكاء الاصطناعي، ما يربط العمق النظري بالتسليم العملي للمشاريع.",
+  summaryPreview:
+    "Full-Stack Developer building production-grade interfaces with React, Next.js, TypeScript, and Supabase.",
+  summaryPreviewAr:
+    "مطور Full-Stack متخصص في بناء واجهات جاهزة للإنتاج باستخدام React و Next.js و TypeScript و Supabase.",
 };
 
 const vanishMailProject: Project = {
