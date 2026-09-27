@@ -11,15 +11,11 @@ interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(function GlassCard(
-  { className, variant = "default", noise = false, glow = false, children, ...rest },
+  { className, variant = "default", noise = true, glow = false, children, ...rest },
   ref,
 ) {
   const v =
-    variant === "strong"
-      ? "card-glass-strong"
-      : variant === "subtle"
-        ? "card-glass-subtle"
-        : "card-glass";
+    variant === "strong" ? "glass-strong" : variant === "subtle" ? "glass-subtle" : "glass";
 
   return (
     <div
@@ -35,10 +31,10 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(function Gla
       {glow && (
         <div
           aria-hidden
-          className="pointer-events-none absolute -top-1/2 left-1/2 h-[120%] w-[80%] -translate-x-1/2 rounded-full opacity-30"
+          className="pointer-events-none absolute -top-1/2 left-1/2 h-[120%] w-[80%] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
           style={{
             background:
-              "radial-gradient(ellipse at center, #7d6cff 0%, #5fc8e8 35%, #e89cd8 55%, transparent 75%)",
+              "conic-gradient(from 90deg at 50% 50%, #7d6cff, #5fc8e8, #e89cd8, #7d6cff)",
           }}
         />
       )}
